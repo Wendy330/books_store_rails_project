@@ -1,0 +1,2 @@
+class Provice < ApplicationRecord
+end
