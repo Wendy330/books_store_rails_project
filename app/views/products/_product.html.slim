@@ -1,0 +1,23 @@
+.product
+  h2 = product.name
+  p
+    strong Price: 
+    = number_to_currency product.price
+  - if full_details
+    p 
+      strong Category: 
+      = product.category.name
+    p 
+      strong Description:
+      = product.description
+    p 
+      strong Stock Quantity:
+      = product.stock_quantity
+    p
+      - if product.status.present?
+        strong Status:
+        = product.status
+    - if product.image.present?
+      = image_tag product.image.url
+  - else
+    p = link_to 'details', product

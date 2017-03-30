@@ -52,8 +52,13 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# These three gems are required for Active Admin
 gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
 gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
 gem 'devise'
 
+# This gem is for carrierwave
 gem 'carrierwave', '~> 1.0'
+
+# This gem allows us to use Slim instead of ERB in our views. http://slim-lang.com/
+gem 'slim-rails'
