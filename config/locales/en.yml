@@ -24,3 +24,8 @@ en:
   errors:
     messages:
       extension_whitelist_error: 'Sorry we only accept image uploads.'
+  views:
+    pagination:
+      previous: "&lt; Previous"
+      next: "Next &gt;"
+      truncate: "..."

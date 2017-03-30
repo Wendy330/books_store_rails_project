@@ -1,3 +1,7 @@
 h1 All Products
 
+/ p = link_to 'CD', by_categories_path
+
 = render partial: 'product', collection: @products, locals: {full_details: false}
+
+= paginate @products
