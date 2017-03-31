@@ -3,10 +3,8 @@ class Product < ApplicationRecord
   belongs_to :category
   mount_uploader :image, ImageUploader
   validates :category_id, :name, :price, :description, :stock_quantity, presence:true
-  #
-  # def remove_image
-  #   @remove_image || false
-  # end
-  #
-  # before_validation { self.image.clear if self.remove_image == '1' }
+
+  def self.search(search)
+    where("name ILIKE ?", "%#{search}%") 
+  end
 end
