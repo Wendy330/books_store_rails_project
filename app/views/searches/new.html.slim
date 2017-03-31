@@ -1,0 +1,13 @@
+h1 Advanced Search
+
+= form_for(@search) do |f|
+  .field
+    = f.label :keywords
+    br
+    = f.text_field :keywords
+  .field
+    = f.label :category_id
+    br
+    = f.collection_select :category_id, Category.order(:name), :id, :name, include_blank: true
+  .actions
+    = f.submit "Search"

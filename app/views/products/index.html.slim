@@ -5,6 +5,7 @@ h1 All Products
 = form_tag(root_path, :method => "get", id: "search-form") do 
     = text_field_tag :search, params[:search], placeholder: "Search Products"
     = submit_tag "Search", :name => nil
+= link_to "Advanced Search", new_search_path
 
 - if @products.blank?
   span There are no products containing the term 
