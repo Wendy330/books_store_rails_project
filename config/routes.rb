@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'about_page/index'
+
   get 'contact' => 'contact_page#index', as: 'contact'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
