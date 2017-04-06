@@ -1,5 +1,5 @@
 class ContactPageController < ApplicationController
   def index
-    @contacts = ContactPage.all
+    @contact = ContactPage.first
   end
 end

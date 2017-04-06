@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  # def display_by_categories
-  #   @products_by_categories = Product.where("category_id = '1'")
-  # end
+  def by_category
+    @products = Product.includes(:category).where(:category_id => params[:id])
+  end
 end
