@@ -1,6 +1,5 @@
 h1 All Products
 
-/ p = link_to 'CD', by_categories_path
 
 = form_tag(root_path, :method => "get", id: "search-form") do 
     = text_field_tag :search, params[:search], placeholder: "Search Products"
@@ -12,6 +11,8 @@ h1 All Products
   span = params[:search]
   span .
 
-= render partial: 'product', collection: @products, locals: {full_details: false}
+.card-deck-wrapper
+  .card-deck
+    = render partial: 'product', collection: @products, locals: {full_details: false}
 
 = paginate @products

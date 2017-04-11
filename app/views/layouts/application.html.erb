@@ -14,13 +14,11 @@
     <div class="container">
       <div class="row">
         <ul class="list-group">
-          <li class="list-group-item"><%= link_to 'CD', '/1' %></li>
-          <li class="list-group-item"><%= link_to 'DVD', '/2' %></li>
-          <li class="list-group-item"><%= link_to 'Blu-ray', '/3' %></li>
-          <li class="list-group-item"><%= link_to 'Books', '/4' %></li>
-          <li class="list-group-item"><%= link_to 'Magazine', '/5' %></li>
-          <li class="list-group-item"><%= link_to 'Video Games', '/6' %></li>
+          <% Category.all.each do |c| %>
+            <li class="list-group-item"><%= link_to c.name, "/#{c.id}" %></li>
+          <% end %>
         </ul>
+        <%= debug session[:add_to_cart] %>
         <div class="col-md-8 offset-md-2"><%= yield %></div>
       </div>
     </div>
