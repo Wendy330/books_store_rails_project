@@ -14,5 +14,5 @@ h1 All Products
 .card-deck-wrapper
   .card-deck
     = render partial: 'product', collection: @products, locals: {full_details: false}
-
+    
 = paginate @products

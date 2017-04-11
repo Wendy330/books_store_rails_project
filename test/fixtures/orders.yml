@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  notes: MyString
+  tax_rates: 9.99
+  status: MyString
+  customer: one
+
+two:
+  notes: MyString
+  tax_rates: 9.99
+  status: MyString
+  customer: two

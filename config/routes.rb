@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  root to: 'products#index'
 
   resources 'products', only: [:index, :show] do
     member do
@@ -11,8 +12,6 @@ Rails.application.routes.draw do
   end
 
   resources 'searches'
-
-  root to: 'products#index'
 
   get 'about' => 'about_page#index', as: 'about'
   get 'contact' => 'contact_page#index', as: 'contact'

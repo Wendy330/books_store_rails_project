@@ -1,28 +1,38 @@
 .card
   .card-block
-    h4.card-title
-      = product.name
+    h4.card-title = product.name
     p.card-text
       strong Price: 
       = number_to_currency product.price
     p.card-text
       strong Description:
       = product.description
-  - if full_details
-      p.card-text
-        strong Category: 
-        = product.category.name
-      p.card-text
-        strong Stock Quantity:
-        = product.stock_quantity
-      p.card-text
-        - if product.status.present?
-          strong Status:
-          = product.status
-      - if product.image.present?
-        = image_tag product.image.url
-  - else
-    p = link_to 'details', product
-    p.card-text
-      = button_to 'Add to cart', add_to_cart_product_path(product), method: :post
-  
+    p.card-text = link_to 'details', product
+    p.card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post
+
+
+/ .card
+/   .card-block
+/     h4.card-title = product.name
+/     p.card-text
+/       strong Price: 
+/       = number_to_currency product.price
+/     - if full_details
+/       p.card-text
+/         strong Description:
+/         = product.description
+/       p.card-text
+/         strong Category: 
+/         = product.category.name
+/       p.card-text
+/         strong Stock Quantity:
+/         = product.stock_quantity
+/       p.card-text
+/         - if product.status.present?
+/           strong Status:
+/           = product.status
+/       - if product.image.present?
+/         = image_tag product.image.url
+/     - else
+/       p.card-text = link_to 'details', product
+/       p.card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post

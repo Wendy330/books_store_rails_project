@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :initialize_session
+  before_action :load_add_to_cart
 
   def index
     @products = Product.order("name").page(params[:page]).per(5)
@@ -33,5 +34,8 @@ class ProductsController < ApplicationController
     session[:shopping_cart_list] ||= []
   end
 
+  def load_add_to_cart
+    @shopping_cart_list = Product.find(session[:shopping_cart_list])
+  end
 
 end
