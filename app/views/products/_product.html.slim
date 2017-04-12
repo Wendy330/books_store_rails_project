@@ -8,6 +8,7 @@
       strong Description:
       = product.description
     p.card-text = link_to 'details', product
+    p.card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post
 
 / .card
 /   .card-block

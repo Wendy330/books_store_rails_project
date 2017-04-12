@@ -5,7 +5,6 @@ h1 All Products
     = submit_tag "Search", :name => nil
 p = link_to "Advanced Search", new_search_path
 p = link_to 'Shopping Cart', added_to_shopping_cart_path
-/ = link_to 'Shopping Cart', add_to_cart_product_path(@shopping_cart_list)
 
 - if @products.blank?
   span There are no products containing the term 
