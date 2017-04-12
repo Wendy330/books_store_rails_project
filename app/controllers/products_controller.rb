@@ -34,7 +34,6 @@ class ProductsController < ApplicationController
   def remove_from_cart
     id = params[:id].to_i
     session[:shopping_cart_list].delete(id)
-
     redirect_to added_to_shopping_cart_path
   end
 
