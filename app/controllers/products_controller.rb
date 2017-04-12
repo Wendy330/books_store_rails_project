@@ -22,11 +22,20 @@ class ProductsController < ApplicationController
   def add_to_cart
     id = params[:id].to_i
     session[:shopping_cart_list] << id unless session[:shopping_cart_list].include?(id)
-    redirect_back(fallback_location: root_path)
+    redirect_to added_to_shopping_cart_path
   end
 
-  def mark_as_added
+  def added_to_shopping_cart
+  end
 
+  def proceed_to_checkout
+  end
+
+  def remove_from_cart
+    id = params[:id].to_i
+    session[:shopping_cart_list].delete(id)
+
+    redirect_to added_to_shopping_cart_path
   end
 
   private

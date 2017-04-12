@@ -1,0 +1,8 @@
+h1 Shopping cart list
+
+- if @shopping_cart_list.any?
+  .card-deck-wrapper
+    .card-deck
+      = render @shopping_cart_list
+- else
+  p Shopping cart is empty now

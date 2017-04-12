@@ -8,8 +8,11 @@
       strong Description:
       = product.description
     p.card-text = link_to 'details', product
-    p.card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post
-
+    - if @shopping_cart_list.include?(product)
+      p.card-text = button_to 'Proceed to checkout', proceed_to_checkout_product_path(product), method: :post
+      p.card-text = button_to 'Remove from cart', remove_from_cart_product_path(product), method: :post
+    - else
+      p.card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post
 
 / .card
 /   .card-block
