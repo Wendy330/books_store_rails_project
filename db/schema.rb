@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411220546) do
+ActiveRecord::Schema.define(version: 20170413011833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,14 +87,22 @@ ActiveRecord::Schema.define(version: 20170411220546) do
     t.index ["product_id"], name: "index_line_items_on_product_id", using: :btree
   end
 
+  create_table "order_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string   "notes"
     t.decimal  "tax_rates"
     t.string   "status"
     t.integer  "customer_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "order_status_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id", using: :btree
+    t.index ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree
   end
 
   create_table "products", force: :cascade do |t|
@@ -130,5 +138,6 @@ ActiveRecord::Schema.define(version: 20170411220546) do
   add_foreign_key "line_items", "orders"
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "order_statuses"
   add_foreign_key "products", "categories"
 end
