@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'signup/sign_up'
+
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'contact' => 'contact_page#index', as: 'contact'
   get ':id' => 'products#by_category', as: 'categories', id: /\d+/
 
+  get 'signup' => 'signup#sign_up', as: 'signup'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -5,7 +5,7 @@ h1 All Products
     = submit_tag "Search", :name => nil
 p = link_to "Advanced Search", new_search_path
 p = link_to 'Shopping Cart', added_to_shopping_cart_path
-
+p = link_to 'Sign up', signup_path
 - if @products.blank?
   span There are no products containing the term 
   span = params[:search]
