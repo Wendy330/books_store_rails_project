@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'added_to_shopping_cart' => 'products#added_to_shopping_cart', as: 'added_to_shopping_cart'
   get 'about' => 'about_page#index', as: 'about'
   get 'contact' => 'contact_page#index', as: 'contact'
-  get ':id' => 'products#by_category', as: 'categories'
+  get ':id' => 'products#by_category', as: 'categories', id: /\d+/
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

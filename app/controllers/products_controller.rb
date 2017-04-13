@@ -3,11 +3,12 @@ class ProductsController < ApplicationController
   before_action :load_add_to_cart
 
   def index
-    @products = Product.order("name").page(params[:page]).per(5)
+    @products = Product.order("name").page(params[:page]).per(6)
+    @line_item = current_order.line_items.new
     if params[:search]
-      @products = Product.search(params[:search]).order("created_at DESC").page(params[:page]).per(5)
+      @products = Product.search(params[:search]).order("created_at DESC").page(params[:page]).per(6)
     else
-      @products = Product.all.order("created_at DESC").page(params[:page]).per(5)
+      @products = Product.all.order("created_at DESC").page(params[:page]).per(6)
     end
   end
 
@@ -22,7 +23,8 @@ class ProductsController < ApplicationController
   def add_to_cart
     id = params[:id].to_i
     session[:shopping_cart_list] << id unless session[:shopping_cart_list].include?(id)
-    redirect_to added_to_shopping_cart_path
+    redirect_back(fallback_location: root_path)
+    # redirect_to added_to_shopping_cart_path
   end
 
   def added_to_shopping_cart
