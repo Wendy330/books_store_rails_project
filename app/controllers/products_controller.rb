@@ -22,9 +22,29 @@ class ProductsController < ApplicationController
 
   def add_to_cart
     id = params[:id].to_i
+    product = Product.find(id)
+    price = product.price
     session[:shopping_cart_list] << id unless session[:shopping_cart_list].include?(id)
+    @order = current_order
+    @line_item = @order.line_items.new(quantity: 1, product_id: id, price: price, total: price)
+    @order.order_status_id = 1
+    @order.save
+    session[:order_id] = @order.id
+
     redirect_back(fallback_location: root_path)
-    # redirect_to added_to_shopping_cart_path
+  end
+
+  def update_quantity
+    id = params[:id].to_i
+    @order = current_order
+    @line_item = @order.line_items.find(params[:id])
+    quantity = params[:item][:quantity].to_i
+    price = params[:item][:price].to_f
+    total = quantity * price
+    @line_item.update_columns(quantity: quantity, price: price, total: total)
+    @line_items = @order.line_items
+    
+    redirect_to added_to_shopping_cart_path
   end
 
   def added_to_shopping_cart
@@ -42,6 +62,10 @@ class ProductsController < ApplicationController
   private
   def initialize_session
     session[:shopping_cart_list] ||= []
+  end
+
+  def shopping_cart_list
+    @line_items = current_order.line_items
   end
 
   def load_add_to_cart

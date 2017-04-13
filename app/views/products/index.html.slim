@@ -13,6 +13,6 @@ p = link_to 'Shopping Cart', added_to_shopping_cart_path
 
 .card-deck-wrapper
   .card-deck
-    = render partial: 'product', collection: @products, locals: {full_details: false}
+    = render partial: 'product', collection: @products
     
 = paginate @products
