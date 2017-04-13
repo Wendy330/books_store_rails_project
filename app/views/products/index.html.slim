@@ -6,6 +6,13 @@ h1 All Products
 p = link_to "Advanced Search", new_search_path
 p = link_to 'Shopping Cart', added_to_shopping_cart_path
 p = link_to 'Sign up', signup_path
+- if flash[:notice]
+  .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
+    button.close[type="button" data-dismiss="alert" aria-label="Close"]
+      span[aria-hidden="true"]
+        | ×
+    = flash[:notice]
+
 - if @products.blank?
   span There are no products containing the term 
   span = params[:search]

@@ -7,6 +7,7 @@ class CustomersController < ApplicationController
     @customer = Customer.create(user_params)
     if @customer.save
       # Handle a successful save.
+      flash[:notice] = "Successfully created a customer account"
       redirect_to root_path
     else
       render 'new'
@@ -15,6 +16,6 @@ class CustomersController < ApplicationController
 
   private
     def user_params
-      params.require(:customer).permit(:username, :email, :password, :first_name, :last_name, :phone, :address)
+      params.require(:customer).permit(:username, :email, :password, :first_name, :last_name, :phone, :address, :province_id)
     end
 end

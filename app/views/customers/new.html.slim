@@ -31,6 +31,10 @@ h1 Sign up
         = f.label :address
         br
         = f.text_field :address
+      .field
+        = f.label :province_id
+        br
+        = f.collection_select :province_id, Province.order(:name), :id, :name, include_blank: true
       br
       = f.submit "Create my account", class: "btn btn-primary"
 br
