@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   get 'contact' => 'contact_page#index', as: 'contact'
   get ':id' => 'products#by_category', as: 'categories', id: /\d+/
 
-  get 'signup' => 'signup#sign_up', as: 'signup'
+  get 'signup' => 'customers#new', as: 'signup'
+  resources :customers
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
