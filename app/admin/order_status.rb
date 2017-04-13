@@ -1,8 +1,8 @@
-ActiveAdmin.register Order do
+ActiveAdmin.register OrderStatus do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
-permit_params :customer_id, :order_status_id, :note, :tax_rates
+permit_params :name
 #
 # or
 #
