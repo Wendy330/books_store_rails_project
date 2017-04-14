@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get 'sessions/new'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -23,6 +25,11 @@ Rails.application.routes.draw do
   get ':id' => 'products#by_category', as: 'categories', id: /\d+/
 
   get 'signup' => 'customers#new', as: 'signup'
+
+  get    '/login' => 'sessions#new'
+  post   '/login' => 'sessions#create'
+  delete '/logout' => 'sessions#destroy'
+
   resources :customers
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
