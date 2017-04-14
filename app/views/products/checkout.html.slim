@@ -1,0 +1,23 @@
+h1 Check out Page
+br
+h3 Shipping address
+- if logged_in?
+  ul.list-group
+    li.list-group-item
+      | Name: #{current_customer.first_name} #{current_customer.last_name}
+    li.list-group-item
+      | Address: #{current_customer.address}
+    li.list-group-item
+      | Province: #{current_customer.province.name}
+    li.list-group-item
+      | Phone: #{current_customer.phone}
+  = form_for 'order', :url => {:controller => 'products', :action => 'calculate_total', id: current_order.id,  method: :post} do |f|
+    .field
+       = submit_tag 'Ship to this address', 'data-disable-with' => false
+- else
+  p.
+   | Forget to #{link_to 'Log in', login_path}?
+/ br
+/ h3 Add a new address
+br
+p = link_to 'Home', root_path

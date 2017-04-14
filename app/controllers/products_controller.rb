@@ -28,6 +28,9 @@ class ProductsController < ApplicationController
     @order = current_order
     @line_item = @order.line_items.new(quantity: 1, product_id: id, price: price, total: price)
     @order.order_status_id = 3
+    if logged_in?
+      @order.customer_id = current_customer.id
+    end
     @order.save
     session[:order_id] = @order.id
 
@@ -40,7 +43,7 @@ class ProductsController < ApplicationController
     @line_item = @order.line_items.find(params[:id])
     quantity = params[:s][:quantity].to_i
     price = params[:s][:price].to_f
-    total = quantity * price
+    total = (quantity * price).to_f
     @line_item.update_columns(quantity: quantity, price: price, total: total)
     @line_items = @order.line_items
 
@@ -50,7 +53,38 @@ class ProductsController < ApplicationController
   def added_to_shopping_cart
   end
 
-  def proceed_to_checkout
+  def checkout
+  end
+
+  def order_confirmation
+  end
+
+  def calculate_total
+    @order = current_order
+
+    if logged_in?
+      @order.customer_id = current_customer.id
+    end
+
+    customer = Customer.find(@order.customer_id)
+    province_id = customer.province_id.to_i
+
+    @order.province_id = province_id
+    province = Province.find(province_id)
+    gst =  province.gst
+    pst =  province.pst
+    hst =  province.hst
+    subtotal = @order.subtotal
+    order_gst = subtotal * gst
+    order_pst = subtotal * pst
+    order_hst = subtotal * hst
+    @order.gst = order_gst
+    @order.pst = order_pst
+    @order.hst = order_hst
+    @order.total =  @order.gst  +  @order.pst + @order.hst + shipping + subtotal
+    @order.save
+
+    redirect_to order_confirmation_path
   end
 
   def remove_from_cart
@@ -61,6 +95,7 @@ class ProductsController < ApplicationController
     @line_item = @order.line_items.where('product_id =?', params[:id]).first
     @line_item.destroy
     @line_items = @order.line_items
+
     if @line_items.count == 0
       @order.destroy
       session[:order_id] = nil

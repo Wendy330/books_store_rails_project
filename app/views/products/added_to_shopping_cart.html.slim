@@ -1,30 +1,33 @@
 h1 Shopping cart list
-p.card-text = link_to 'Proceed to checkout', root_path
 - if shopping_cart_list.any?
-  .card-deck-wrapper
-    .card-deck
-      - shopping_cart_list.each do |s|
+  - sub_total = 0
+  - shopping_cart_list.each do |s|
+    .card-deck-wrapper
+      .card-deck
         .card
           .card-block
             h4.card-title = s.product.name
             p.card-text
-              strong Price: 
-              = number_to_currency s.product.price
-            p.card-text
               strong Description:
               = s.product.description
             p.card-text
+              strong Price: 
+              = number_to_currency s.product.price
+              - sub_total = sub_total + s.total
+            p.card-text
               strong Quantity:
-              = form_for 's', :url => {:controller => 'products', :action => 'update_quantity', 
-                               id: s,  method: :post} do |f|
-                                .field
-                                  = f.number_field :quantity, :value => s.quantity
-                                  = f.hidden_field :price, :value => s.product.price
-                                  = f.hidden_field :product_id, value: s.product_id
-                                  = submit_tag 'Update', 'data-disable-with' => false
-            /   = s.quantity
-            / p.card-text = number_field_tag 'quantity', '1'
+              = s.quantity
+              = form_for 's', :url => {:controller => 'products', :action => 'update_quantity', id: s,  method: :post} do |f|
+                .field
+                  = f.number_field :quantity, :value => s.quantity
+                  = f.hidden_field :price, :value => s.product.price
+                  = f.hidden_field :product_id, value: s.product_id
+                  = submit_tag 'Update', 'data-disable-with' => false
             p.card-text = button_to 'Remove from cart', remove_from_cart_product_path(s.product_id), method: :post
+  p
+    | Subtotal(#{pluralize(shopping_cart_list.count, 'item')}): CDN
+    = number_to_currency sub_total
+  p = link_to 'Proceed to checkout', checkout_path
 - else
   p Shopping cart is empty now
 p = link_to 'Home', root_path
