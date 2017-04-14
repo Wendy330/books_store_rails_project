@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :initialize_session
-  before_action :load_add_to_cart
+  # before_action :load_add_to_cart
 
   def index
     @products = Product.order("name").page(params[:page]).per(6)
@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
     session[:shopping_cart_list] << id unless session[:shopping_cart_list].include?(id)
     @order = current_order
     @line_item = @order.line_items.new(quantity: 1, product_id: id, price: price, total: price)
-    @order.order_status_id = 1
+    @order.order_status_id = 3
     @order.save
     session[:order_id] = @order.id
 
@@ -38,12 +38,12 @@ class ProductsController < ApplicationController
     id = params[:id].to_i
     @order = current_order
     @line_item = @order.line_items.find(params[:id])
-    quantity = params[:item][:quantity].to_i
-    price = params[:item][:price].to_f
+    quantity = params[:s][:quantity].to_i
+    price = params[:s][:price].to_f
     total = quantity * price
     @line_item.update_columns(quantity: quantity, price: price, total: total)
     @line_items = @order.line_items
-    
+
     redirect_to added_to_shopping_cart_path
   end
 
@@ -56,7 +56,21 @@ class ProductsController < ApplicationController
   def remove_from_cart
     id = params[:id].to_i
     session[:shopping_cart_list].delete(id)
+
+    @order = current_order
+    @line_item = @order.line_items.where('product_id =?', params[:id]).first
+    @line_item.destroy
+    @line_items = @order.line_items
+    if @line_items.count == 0
+      @order.destroy
+      session[:order_id] = nil
+    end
+
     redirect_to added_to_shopping_cart_path
+  end
+
+  def shopping_cart_list
+    @line_items = current_order.line_items
   end
 
   private
@@ -64,12 +78,8 @@ class ProductsController < ApplicationController
     session[:shopping_cart_list] ||= []
   end
 
-  def shopping_cart_list
-    @line_items = current_order.line_items
-  end
-
   def load_add_to_cart
-    @shopping_cart_list = Product.find(session[:shopping_cart_list])
+    # @shopping_cart_list = Product.find(session[:shopping_cart_list])
   end
-
+  helper_method :shopping_cart_list
 end
