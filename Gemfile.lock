@@ -246,7 +246,6 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
-  bcrypt (= 3.1.11)
   bootstrap (~> 4.0.0.alpha6)
   byebug
   carrierwave (~> 1.0)
