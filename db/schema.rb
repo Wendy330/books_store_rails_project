@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414233415) do
+ActiveRecord::Schema.define(version: 20170414234235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,13 +99,15 @@ ActiveRecord::Schema.define(version: 20170414233415) do
 
   create_table "orders", force: :cascade do |t|
     t.string   "notes"
-    t.decimal  "tax_rates"
     t.integer  "customer_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "order_status_id"
     t.decimal  "subtotal"
     t.decimal  "total"
+    t.decimal  "gst"
+    t.decimal  "pst"
+    t.decimal  "hst"
     t.index ["customer_id"], name: "index_orders_on_customer_id", using: :btree
     t.index ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree
   end
