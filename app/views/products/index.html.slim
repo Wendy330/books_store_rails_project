@@ -1,34 +1,23 @@
-h1 All Products
-
-= form_tag(root_path, :method => "get", id: "search-form") do 
-    = text_field_tag :search, params[:search], placeholder: "Search Products"
-    = submit_tag "Search", :name => nil
-p = link_to "Advanced Search", new_search_path
-p = link_to 'Shopping Cart', added_to_shopping_cart_path
-
-- if logged_in?
-  p
-    | Hello, 
-    = current_customer.username
-  p = link_to 'Log out', logout_path
-- else
-  p = link_to 'Sign up', signup_path
-  p = link_to 'Log in', login_path
-  
 - if flash[:notice]
   .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
     button.close[type="button" data-dismiss="alert" aria-label="Close"]
       span[aria-hidden="true"]
         | ×
     = flash[:notice]
+    
+- if flash[:updated]
+  .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
+    button.close[type="button" data-dismiss="alert" aria-label="Close"]
+      span[aria-hidden="true"]
+        | ×
+    = flash[:updated]
 
 - if @products.blank?
   span There are no products containing the term 
   span = params[:search]
   span .
-
-.card-deck-wrapper
-  .card-deck
+  
+.card-columns
     = render partial: 'product', collection: @products
-    
+
 = paginate @products

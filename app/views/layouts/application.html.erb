@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -13,12 +12,62 @@
   <body>
     <div class="container">
       <div class="row">
-        <ul class="list-group">
-          <% Category.all.each do |c| %>
-            <li class="list-group-item"><%= link_to c.name, "/#{c.id}" %></li>
-          <% end %>
-        </ul>
-        <div class="col-md-8 offset-md-2"><%= yield %></div>
+        <div class="col-md-10 offset-md-1">
+          <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <%= image_tag("logo.jpg") %>
+              <h1 class="display-6">Books</h1>
+              <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            </div>
+          </div>
+          <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <div>
+              <ul class="nav">
+                <li class="nav-item">
+                  <%= link_to "HOME", "#{root_path}", class:"nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "ADVANCED SEARCH", "#{new_search_path}", class:"nav-link" %>
+                </li>
+                <% if logged_in? %>
+                  <li class="nav-item">
+                    <%= link_to "LOGOUT", "#{logout_path}", class:"nav-link" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "Welcome, #{current_customer.username}", "#{edit_customer_path(current_customer.id)}", class:"nav-link", id:"username" %>
+                  </li>
+                <% else %>
+                  <li class="nav-item">
+                    <%= link_to "SIGN UP", "#{signup_path}", class:"nav-link" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "LOGIN", "#{login_path}", class:"nav-link" %>
+                  </li>
+                <% end %>
+                <li class="nav-item">
+                  <%= image_tag("cart.png") %>
+                  <%= link_to "CART", "#{added_to_shopping_cart_path}", id: "cart", class:"nav-link" %>
+                </li>
+              </ul>
+              <%= form_tag(root_path, :method => "get", class:"form-inline", id:"search") do %>
+                  <div id="search_input"><%= text_field_tag :search, params[:search], placeholder: "Search Products" %></div>
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <% end %>
+            </div>
+          </nav>
+        </div>
+        <div class="col-md-8 offset-md-1"><%= yield %></div>
+        <div>
+          <ul class="list-group">
+            <% Category.all.each do |c| %>
+              <li class="list-group-item"><%= link_to c.name, "/#{c.id}" %></li>
+            <% end %>
+          </ul>
+        </div>
+        <footer class="col-md-8 offset-md-1">
+          <div id="footer_line_one">Address: 504 Main Street, Winnipeg, MB, CA</div>
+          <div id="footer_line_two">Copyright © since 2017 books.ca All Rights Reserved</div>
+        </footer>
       </div>
     </div>
   </body>

@@ -1,1 +1,37 @@
 @import "bootstrap";
+
+.pagination{
+    margin-top: 50px;
+}
+
+.card-columns{
+  .card{
+    margin-bottom: 20px;
+    height: 450px;
+    background: #ffffcc;
+
+    .card-text{
+      .link_to_details{
+        position: absolute;
+        bottom: 50px;
+      }
+
+      .add_to_cart{
+        position: absolute;
+        bottom: 10px;
+      }
+
+      .remove_from_cart{
+        margin-top: 30px;
+      }
+    }
+  }
+}
+
+.card-deck-wrapper{
+  .card-deck{
+    .card{
+      margin-bottom: 20px;
+    }
+  }
+}

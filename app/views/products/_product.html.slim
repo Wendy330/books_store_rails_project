@@ -1,14 +1,14 @@
 .card
   .card-block
     h4.card-title = product.name
-    p.card-text
+    .card-text
       strong Price: 
       = number_to_currency product.price
-    p.card-text
+    .card-text
       strong Description:
       = product.description
-    p.card-text = link_to 'details', product
-    p.card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post
+    .card-text = link_to 'details', product, class:"link_to_details"
+    .card-text = button_to 'Add to cart', add_to_cart_product_path(product), method: :post, class:"add_to_cart"
 
 / .card
 /   .card-block

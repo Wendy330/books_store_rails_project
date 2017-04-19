@@ -1,4 +1,4 @@
-h1 Shopping cart list
+h3 Shopping cart list
 - if shopping_cart_list.any?
   - sub_total = 0
   - shopping_cart_list.each do |s|
@@ -7,15 +7,15 @@ h1 Shopping cart list
         .card
           .card-block
             h4.card-title = s.product.name
-            p.card-text
-              strong Description:
+            .card-text
+              strong Description: 
               = s.product.description
-            p.card-text
+            .card-text
               strong Price: 
               = number_to_currency s.product.price
               - sub_total = sub_total + s.total
-            p.card-text
-              strong Quantity:
+            .card-text
+              strong Quantity: 
               = s.quantity
               = form_for 's', :url => {:controller => 'products', :action => 'update_quantity', id: s,  method: :post} do |f|
                 .field
@@ -23,11 +23,10 @@ h1 Shopping cart list
                   = f.hidden_field :price, :value => s.product.price
                   = f.hidden_field :product_id, value: s.product_id
                   = submit_tag 'Update', 'data-disable-with' => false
-            p.card-text = button_to 'Remove from cart', remove_from_cart_product_path(s.product_id), method: :post
+            .card-text = button_to 'Remove from cart', remove_from_cart_product_path(s.product_id), method: :post, class:"remove_from_cart"
   p
     | Subtotal(#{pluralize(shopping_cart_list.count, 'item')}): CDN
     = number_to_currency sub_total
   p = link_to 'Proceed to checkout', checkout_path
 - else
   p Shopping cart is empty now
-p = link_to 'Home', root_path

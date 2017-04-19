@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :initialize_session
-  # before_action :load_add_to_cart
+  include SessionsHelper
 
   def index
     @products = Product.order("name").page(params[:page]).per(6)
@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
     session[:shopping_cart_list] << id unless session[:shopping_cart_list].include?(id)
     @order = current_order
     @line_item = @order.line_items.new(quantity: 1, product_id: id, price: price, total: price)
-    @order.order_status_id = 3
+    @order.order_status_id = 2
     if logged_in?
       @order.customer_id = current_customer.id
     end
@@ -54,6 +54,21 @@ class ProductsController < ApplicationController
   end
 
   def checkout
+    @order = current_order
+    @line_items = @order.line_items
+    subtotal = 0
+    @line_items.each do |item|
+      subtotal += item.total
+    end
+    if logged_in?
+      @order.customer_id = current_customer.id
+    end
+    @order.order_status_id = 3
+    @order.subtotal = subtotal.round(2)
+    @order.gst = 0
+    @order.pst = 0
+    @order.hst = 0
+    @order.save
   end
 
   def order_confirmation
@@ -61,27 +76,19 @@ class ProductsController < ApplicationController
 
   def calculate_total
     @order = current_order
-
-    if logged_in?
-      @order.customer_id = current_customer.id
-    end
-
     customer = Customer.find(@order.customer_id)
     province_id = customer.province_id.to_i
-
-    @order.province_id = province_id
     province = Province.find(province_id)
     gst =  province.gst
     pst =  province.pst
     hst =  province.hst
-    subtotal = @order.subtotal
-    order_gst = subtotal * gst
-    order_pst = subtotal * pst
-    order_hst = subtotal * hst
-    @order.gst = order_gst
-    @order.pst = order_pst
-    @order.hst = order_hst
-    @order.total =  @order.gst  +  @order.pst + @order.hst + shipping + subtotal
+    order_gst = @order.subtotal * gst
+    order_pst = @order.subtotal * pst
+    order_hst = @order.subtotal * hst
+    @order.gst = order_gst.round(2)
+    @order.pst = order_pst.round(2)
+    @order.hst = order_hst.round(2)
+    @order.total =  @order.gst  +  @order.pst + @order.hst + @order.subtotal
     @order.save
 
     redirect_to order_confirmation_path
@@ -97,7 +104,12 @@ class ProductsController < ApplicationController
     @line_items = @order.line_items
 
     if @line_items.count == 0
-      @order.destroy
+      @order.order_status_id = 4
+      @order.gst = 0
+      @order.pst = 0
+      @order.hst = 0
+      @order.total = 0
+      @order.save
       session[:order_id] = nil
     end
 
@@ -113,8 +125,5 @@ class ProductsController < ApplicationController
     session[:shopping_cart_list] ||= []
   end
 
-  def load_add_to_cart
-    # @shopping_cart_list = Product.find(session[:shopping_cart_list])
-  end
   helper_method :shopping_cart_list
 end

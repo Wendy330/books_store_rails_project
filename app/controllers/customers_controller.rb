@@ -1,4 +1,6 @@
 class CustomersController < ApplicationController
+  include SessionsHelper
+
   def new
     @customer = Customer.new
   end
@@ -11,6 +13,21 @@ class CustomersController < ApplicationController
       redirect_to root_path
     else
       render 'new'
+    end
+  end
+
+  def edit
+    @customer = Customer.find(current_customer.id)
+  end
+
+  def update
+    @customer = Customer.find(params[:id])
+    if @customer.update_attributes(user_params)
+      # Handle a successful update.
+      flash[:updated] = "Account information updated"
+      redirect_to root_path
+    else
+      render 'edit'
     end
   end
 

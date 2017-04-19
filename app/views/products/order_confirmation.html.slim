@@ -1,4 +1,55 @@
 h1 Confirm order
 
+h3 Your order
+- current_order.line_items.each do |line_item|
+  .card-deck-wrapper
+    .card-deck
+      .card
+        .card-block
+          h4.card-title = line_item.product.name
+          .card-text
+            strong Description:
+            = line_item.product.description
+          .card-text
+            strong Price: 
+            = number_to_currency line_item.product.price
+          .card-text
+            strong Quantity:
+            = line_item.quantity
+p
+  | Before taxes:
+  = number_to_currency current_order.subtotal
+p
+  | GST:
+  = number_to_currency current_order.gst
+p
+  | PST:
+  = number_to_currency current_order.pst
+p
+  | HST:
+  = number_to_currency current_order.hst  
+p
+  | Total:
+  = number_to_currency current_order.total
+
 br
+h3 Shipping information
+ul.list-group
+  li.list-group-item
+    | Name: #{current_customer.first_name} #{current_customer.last_name}
+  li.list-group-item
+    | Address: #{current_customer.address}
+  li.list-group-item
+    | Province: #{current_customer.province.name}
+  li.list-group-item
+    | Phone: #{current_customer.phone}
+br
+= form_tag charges_path do
+  article
+    - if flash[:error].present?
+      #error_explanation
+        p = flash[:error]
+    label.
+      script.stripe-button data-amount="#{@amount}" data-description="#{@description}" data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" src="https://checkout.stripe.com/checkout.js" 
+
 p = link_to 'Home', root_path

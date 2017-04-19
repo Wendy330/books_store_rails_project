@@ -13,3 +13,47 @@
  *= require_tree .
  *= require_self
  */
+
+nav{
+  margin-top: -20px;
+  margin-bottom: 20px;
+
+  #cart{
+    margin-top: -37px;
+    margin-left: 20px;
+  }
+
+  #username{
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  #search{
+      float: right;
+      margin-top: -40px;
+  }
+
+  #search_input{
+    margin-top: 40px;
+    margin-right: 20px;
+  }
+}
+
+footer{
+  margin-bottom: 20px;
+  margin-top: 50px;
+
+  #footer_line_one{
+    padding-top: 50px;
+    margin-left: 250px;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  #footer_line_two{
+    padding-top: 10px;
+    margin-left: 220px;
+    font-style: italic;
+    font-size: 14px;
+  }
+}
