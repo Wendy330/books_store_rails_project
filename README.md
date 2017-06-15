@@ -1,24 +1,6 @@
-# README
+This is an E-commerce site with five main categories, books, magazines, CD, DVD, and Video games.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Use Active admin gem to manage all data.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This site also contains shopping cart, which allows users to make orders and checkout orders, 
+as well as completing payment with Stripe gem.
